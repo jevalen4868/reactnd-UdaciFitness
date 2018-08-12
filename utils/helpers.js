@@ -142,3 +142,7 @@ export const getMetricMetaInfo = (metric) => {
     ? info
     : info[metric]
 }
+
+export const getDailyReminderValue = () => ({
+  today: '👏 Don\'t forget to log your data today!'
+})

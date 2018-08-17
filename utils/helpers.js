@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, StyleSheet } from 'react-native'
+import { View, StyleSheet, Platform } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { white, red, orange, blue, lightPurp, pink } from './colors'
 
@@ -158,3 +158,6 @@ export const getMetricMetaInfo = (metric) => {
 export const getDailyReminderValue = () => ({
   today: '👏 Don\'t forget to log your data today!'
 })
+
+export const isIos = Platform.OS === 'ios'
+export const isAndroid = Platform.OS === 'android'

@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Platform, TouchableOpacity } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { connect } from 'react-redux'
-import { receiveEntries, addEntry } from "../actions";
-import { timeToString, getDailyReminderValue } from "../utils/helpers";
+import { addEntry, receiveEntries } from "../actions";
+import { getDailyReminderValue, timeToString } from "../utils/helpers";
 import { fetchCalendarResults } from "../utils/api";
 import UdaciFitnessCalendar from 'udacifitness-calendar'
 import { DateHeader } from './DateHeader'
@@ -46,7 +46,12 @@ class History extends Component {
           </View>
           :
           <TouchableOpacity
-            onPress={() => console.log("HI")}
+            onPress={() => this.props.navigation.navigate(
+              'EntryDetail',
+              {
+                entryId: key
+              }
+            )}
           >
             <MetricCard
               metrics={metrics} date={formattedDate}

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native'
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { getDailyReminderValue, getMetricMetaInfo, timeToString } from "../utils/helpers";
 import { UdaciSlider } from "./UdaciSlider";
 import { UdaciSteppers } from "./UdaciSteppers";
@@ -10,6 +10,7 @@ import { removeEntry, submitEntry } from "../utils/api";
 import { addEntry } from "../actions";
 import { connect } from 'react-redux';
 import { purple, white } from "../utils/colors";
+import { NavigationActions } from 'react-navigation'
 
 const SubmitBtn = ({ onPress }) => (
   <TouchableOpacity
@@ -78,7 +79,7 @@ class AddEntry extends Component {
       ...this.initialState,
     }))
 
-    // Navigate to home
+    this.toHome()
 
     submitEntry({ key, entry })
 
@@ -93,9 +94,15 @@ class AddEntry extends Component {
       [key]: getDailyReminderValue(),
     }))
 
-    // Route to home
+    this.toHome()
 
     removeEntry(key)
+  }
+
+  toHome = () => {
+    this.props.navigation.dispatch(NavigationActions.back({
+      key: 'AddEntry',
+    }))
   }
 
   render() {

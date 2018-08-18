@@ -1,15 +1,16 @@
 import React from 'react'
-import { View, Platform, StatusBar, StatusBarIOS } from 'react-native';
+import { StatusBar, View } from 'react-native';
 import AddEntry from "./components/AddEntry";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from './reducers'
 import History from "./components/History";
-import { createBottomTabNavigator, createMaterialTopTabNavigator } from "react-navigation";
+import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator } from "react-navigation";
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { isAndroid, isIos } from './utils/helpers'
 import { Constants } from 'expo'
+import EntryDetail from './components/EntryDetail'
 
 const UdaciStatusBar = ({ backgroundColor, ...props }) => (
   <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -71,6 +72,26 @@ const Tabs = isIos
   ? createBottomTabNavigator(RouteConfigs, tabNavigatorConfigIos)
   : createMaterialTopTabNavigator(RouteConfigs, tabNavigatorConfigAndroid)
 
+const MainNavigation = createStackNavigator({
+  Home: {
+    screen: Tabs,
+    navigationOptions: {
+      headerTintColor: white,
+      header: null,
+    },
+  },
+  EntryDetail: {
+    screen: EntryDetail,
+    navigationOptions: {
+      headerTintColor: white,
+      headerStyle: {
+        backgroundColor: purple,
+      },
+      headerLeft: isAndroid ? null : this.headerLeft,
+    },
+  }
+})
+
 export default class App extends React.Component {
   render() {
     return (
@@ -78,7 +99,7 @@ export default class App extends React.Component {
         store={createStore(reducer)}>
         <View style={{ flex: 1 }}>
           <UdaciStatusBar backgroundColor={purple} barStyle={'light-content'}/>
-          <Tabs/>
+          <MainNavigation/>
         </View>
       </Provider>
     )

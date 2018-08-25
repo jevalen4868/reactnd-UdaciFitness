@@ -5,12 +5,18 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import reducer from './reducers'
 import History from "./components/History";
-import { createBottomTabNavigator, createMaterialTopTabNavigator, createStackNavigator } from "react-navigation";
+import {
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator,
+  createStackNavigator,
+  createDrawerNavigator,
+} from "react-navigation";
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { isAndroid, isIos } from './utils/helpers'
 import { Constants } from 'expo'
 import EntryDetail from './components/EntryDetail'
+import Live from "./components/Live";
 
 const UdaciStatusBar = ({ backgroundColor, ...props }) => (
   <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
@@ -33,6 +39,13 @@ const RouteConfigs = {
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor}/>
     })
   },
+  Live: {
+    screen: Live,
+    navigationOptions: {
+      tabBarLabel: 'Live',
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-speedometer' size={30} color={tintColor}/>
+    }
+  }
 }
 
 const tabNavigatorConfigIos = {
